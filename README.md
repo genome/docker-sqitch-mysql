@@ -1,7 +1,9 @@
-Docker for Running Sqitch with MySQL on Trusty at MGI
+## Docker for Running Sqitch with MySQL on Trusty at MGI
 
-Ubuntu trusty
-Sqitch latest
-MySQL  5.5
-SQLite latest
+#### Apps and Versions
+* Ubuntu => trusty
+* Sqitch => latest
+* MySQL => 5.5
+* SQLite => latest
+
 
