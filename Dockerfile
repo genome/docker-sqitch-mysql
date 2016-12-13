@@ -18,6 +18,7 @@ RUN apt-get update && \
 	gcc \
 	perl \
 	perl-modules \
+	libnss-sss \
 	make
 
 # Install sqitch
