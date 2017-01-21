@@ -29,14 +29,20 @@ RUN cpan HTML::Entities Test::MockObject Test::NoWarnings Test::Exception IPC::S
 # Install sqitch
 RUN cpan App:Sqitch
 
+RUN apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	ca-certificates \
+	git && \
+	apt-get clean
+
 # Use sqitch wrapper to setup ENV and allow running a bash session
 RUN mkdir /opt/bin/ && \
 	cd /tmp/ && \
 	git clone https://github.com/genome/docker-sqitch-mysql.git && \
-	cd docker-sqitch && \
-	cp sqitch /opt/bin && \
+	cd docker-sqitch-mysql/ && \
+	cp sqitch /opt/bin/ && \
 	cd / && \
-	rm -rf /tmp/docker-sqitch
+	rm -rf /tmp/docker-sqitch-mysql
 RUN chmod 777 /opt/bin/sqitch
 
 # Entrypoint is sqitch wrapper script
