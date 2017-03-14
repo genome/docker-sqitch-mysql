@@ -54,4 +54,4 @@ RUN echo "America/Chicago" > /tmp/timezone && \
 ENV LANG C
 
 # Entrypoint is sqitch wrapper script
-ENTRYPOINT ["/opt/bin/sqitch"]
+ENTRYPOINT ["/usr/local/bin/sqitch"]
