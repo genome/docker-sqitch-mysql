@@ -50,6 +50,8 @@ RUN echo "America/Chicago" > /tmp/timezone && \
 	mv -f /tmp/timezone /etc/timezone && \
 	dpkg-reconfigure -f noninteractive tzdata
 
+# Set LANG for perl
+ENV LANG C
+
 # Entrypoint is sqitch wrapper script
 ENTRYPOINT ["/opt/bin/sqitch"]
-
