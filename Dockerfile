@@ -45,6 +45,11 @@ RUN mkdir /opt/bin/ && \
 	rm -rf /tmp/docker-sqitch-mysql
 RUN chmod 777 /opt/bin/sqitch
 
+# Set timezone
+RUN echo "America/Chicago" > /tmp/timezone && \
+	mv -f /tmp/timezone /etc/timezone && \
+	dpkg-reconfigure -f noninteractive tzdata
+
 # Entrypoint is sqitch wrapper script
 ENTRYPOINT ["/opt/bin/sqitch"]
 
