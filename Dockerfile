@@ -43,5 +43,8 @@ RUN echo "America/Chicago" > /tmp/timezone && \
 # Set LANG for perl
 ENV LANG C
 
-# Entrypoint is sqitch wrapper script
-ENTRYPOINT ["/usr/local/bin/sqitch"]
+# entrypoint is the wrapper scipt
+RUN mkdir /opt/bin/
+COPY entrypoint /opt/bin/
+RUN chmod 777 /opt/bin/entrypoint
+ENTRYPOINT ["/opt/bin/entrypoint"]
