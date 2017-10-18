@@ -14,8 +14,11 @@ MAINTAINER Eddie Belter <ebelter@wustl.edu>
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	build-essential \
+	ca-certificates \
+	cpanminus \
 	curl \
 	gcc \
+	git \
 	perl \
 	perl-modules \
 	libnss-sss \
@@ -24,27 +27,15 @@ RUN apt-get update && \
 	sqlite3 && \
 	apt-get clean
 
-# Install sqitch perl deps
-RUN cpan HTML::Entities Test::MockObject Test::NoWarnings Test::Exception IPC::System::Simple Moo
-# Install sqitch
-RUN cpan App:Sqitch
-
-RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-	ca-certificates \
-	git && \
-	apt-get clean
+# Install sqitch & deps
+RUN PERL_MM_USE_DEFAULT=1 cpan App::Sqitch
+RUN PERL_MM_USE_DEFAULT=1 cpan DBD::SQLite
 
 # Set timezone
-RUN echo "America/Chicago" > /tmp/timezone && \
-	mv -f /tmp/timezone /etc/timezone && \
-	dpkg-reconfigure -f noninteractive tzdata
+RUN TZ="America/Chicago"
 
-# Set LANG for perl
+#Set LANG for perl
 ENV LANG C
 
-# entrypoint is the wrapper scipt
-RUN mkdir /opt/bin/
-COPY entrypoint /opt/bin/
-RUN chmod 777 /opt/bin/entrypoint
-ENTRYPOINT ["/opt/bin/entrypoint"]
+# SQITCH!
+ENTRYPOINT ["sqitch"]
